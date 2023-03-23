@@ -1,0 +1,44 @@
+<div>
+  <div>
+    <div *ngFor="let component of components; let i = index" class="relative w-full h-full hover:border-slate-300 border border-transparent group">
+
+      <div class="absolute -top-3 flex justify-center w-full invisible group-hover:visible pointer-events-auto p-1">
+        <button class="bg-slate-300 rounded-full mx-auto" (click)="addElement(i)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="absolute -left-0.5 -top-2 invisible group-hover:visible pointer-events-auto">
+        <div class="bg-slate-300 px-2">
+          <span class="text-xs">{{component.type}}</span>
+        </div>
+      </div>
+
+      <div class="absolute -bottom-3 w-full flex justify-center invisible group-hover:visible pointer-events-auto p-1">
+        <button class="bg-slate-300 rounded-full" (click)="addElement(i + 1)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus fill-slate-600" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div [ngSwitch]="component.type" class="p-10">
+        <div *ngSwitchCase="'text'">
+          <app-text [text]="getTextModel(component)"></app-text>
+        </div>
+        <div *ngSwitchCase="'image'">
+          <app-image></app-image>
+        </div>
+        <div *ngSwitchCase="'video'">
+          <app-video></app-video>
+        </div>
+
+        <div *ngSwitchDefault>
+          <app-placeholder (newElement)="setElementType($event, i)"></app-placeholder>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
